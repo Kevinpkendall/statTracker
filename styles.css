@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+li {
+}
+
+ul {
+    list-style-type: none;
+
+}
+
+#fullSize {
+    height: 100%;
+    width: 100%;
+    overflow:auto;        /* hidden, auto. Change to "hidden" to get rid of scroll bar -> Would need to adjust size of player boxes */
+}
+
+.teamOverviewBanner {
+    /*position: fixed;*/
+    /*z-index: 10;*/
+    background-color: red;
+    text-align: center;
+    padding: 0px;
+
+}
+#homeTeam {
+    border-style: solid none solid solid;
+
+}
+#homeTeamName {
+    border: solid black 1px;
+
+}
+
+#awayTeam {
+    border-style: solid solid solid none;
+}
+#awayTeamName {
+    border: solid black 1px;
+}
+
+
+.playerList ul li {
+    font-size: 20px;
+    background-color: whitesmoke;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    border: solid black 1px;
+    /*margin: 2px; */
+    padding: 15px 0px 15px 0px;
+    word-wrap: break-word;
+    /*fix height later. something with padding on playerlists */
+}
+
+.leftPanel {
+    background-color: gray;
+    /*height: 370px;*/
+}
+.leftPanel ul {
+    max-height: 370px;
+    overflow: auto;
+}
+
+.statPanel {
+    background-color: lightgray;
+    max-height: 370px;
+    overflow: auto;
+}
+
+.rightPanel {
+    background-color: gray;
+    height: 100%;
+}
+.rightPanel ul {
+    max-height: 370px;
+    overflow: auto;
+}
+
+.buttonPanel {
+    background-color: lightgray;
+    height: 170px;
+
+}
+
+
+
+
+.leftButtonPanel {
+    height: inherit;
+    border: solid black  1px;
+    padding-top: 6%;
+}
+
+.btn-group-row {
+    display: block;
+    margin: 0 auto;
+}
+
+.centerButtonPanel {
+    height: inherit;
+    border: solid black 1px;
+    text-align: center;
+    padding-top: 1.3%;
+}
+
+.centerButtonPanel button {
+
+}
+
+.rightButtonPanel {
+    height: inherit;
+    border: solid black  1px;
+    padding-top: 6%;
+}
+
+.container > .row > .table tr.active td {
+    background-color: blue;
+}
