@@ -9,7 +9,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!--<script src="https://use.fontawesome.com/4fd9c36bef.js"></script>-->
+    <script src="https://use.fontawesome.com/4fd9c36bef.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css"/>
@@ -21,7 +21,7 @@
 
 <body>
 <div id="fullSize">
-    <div class="container-fluid">
+    <div class="container-fluid topSection">
         <div class="row">
             <section class="teamOverviewBanner col-sm-12" id="test">
                 <div class="col-sm-6" id="homeTeam">
@@ -37,11 +37,378 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid midSection">
         <div class="row">
-            <div class="leftPanel playerList col-sm-2">
+            <!--<div class="leftPanel playerList hidden-xs hidden-sm col-md-2">-->
+                <!--<ul>-->
+                    <!--<li class="benchPlayer">(Bench)</li>-->
+                    <!--<li class="benchPlayer"> M.Leonard </li>-->
+                    <!--<li class="benchPlayer"> E.Davis </li>-->
+                    <!--<li class="benchPlayer"> N.Vonleh </li>-->
+                    <!--<li class="benchPlayer"> J.Layman </li>-->
+                    <!--<li class="benchPlayer"> S.Napier </li>-->
+                    <!--<li class="benchPlayer"> E.Turner </li>-->
+                    <!--<li class="benchPlayer"> A.Crabbe </li>-->
+                    <!--<li class="benchPlayer"> P.Connaughton </li>-->
+                <!--</ul>-->
+            <!--</div>-->
+
+            <div class="statPanel col-xs-12 col-sm-12 col-md-10" id="regStatPanel">
+                <h1> STAT PANEL </h1>
+                <table class="table table-bordered table-hover">         <!-- Check Bootstrap "Tables" section for designs -->
+                    <thead>
+                    <tr>
+                        <th>Starters</th>
+                        <th class="regStat">FG</th>
+                        <th class="regStat">3PT</th>
+                        <th class="regStat">FT</th>
+                        <th class="regStat">OREB</th>
+                        <th class="regStat">DREB</th>
+                        <th class="regStat">REB</th>
+                        <th class="regStat">AST</th>
+                        <th class="regStat">STL</th>
+                        <th class="regStat">BLK</th>
+                        <th class="regStat">TO</th>
+                        <th class="regStat">PF</th>
+                        <th class="regStat">PTS</th>
+                        <th class="advStat hidden">TS%</th>
+                        <th class="advStat hidden">EFG%</th>
+                        <th class="advStat hidden">FTR</th>
+                        <th class="advStat hidden">TR%</th>
+                        <th class="advStat hidden">HAR</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <!--Need a class to tie first slot in both reg stats and adv stats together so both will update upon singular edit-->
+                        <td class="name p1" id="lillard">D.Lillard</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">C.J.McCollum</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">M.Harkless</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">A.Crabbe</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">Jusuf Nurkic</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                     <!--Bench Header-->
+                    <tr class="benchHeader">
+                        <th>Bench</th>
+                        <th class="regStat">FG</th>
+                        <th class="regStat">3PT</th>
+                        <th class="regStat">FT</th>
+                        <th class="regStat">OREB</th>
+                        <th class="regStat">DREB</th>
+                        <th class="regStat">REB</th>
+                        <th class="regStat">AST</th>
+                        <th class="regStat">STL</th>
+                        <th class="regStat">BLK</th>
+                        <th class="regStat">TO</th>
+                        <th class="regStat">PF</th>
+                        <th class="regStat">PTS</th>
+                        <th class="advStat hidden">TS%</th>
+                        <th class="advStat hidden">EFG%</th>
+                        <th class="advStat hidden">FTR</th>
+                        <th class="advStat hidden">TR%</th>
+                        <th class="advStat hidden">HAR</th>
+                    </tr>
+                    <tr>
+                        <td class="name">M.Leonard</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">E.Davis</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">N.Vonleh</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">A.Aminu</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr>
+                        <td class="name">E.Turner</td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr class="teamRowStats">
+                        <th>Team</th>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat hidden">TS%</td>
+                        <td class="advStat hidden">EFG%</td>
+                        <td class="advStat hidden">FTR</td>
+                        <td class="advStat hidden">TR%</td>
+                        <td class="advStat hidden">HAR</td>
+                    </tr>
+                    <tr class="teamRowPercent">
+                        <th>SEE ESPN.COM</th>
+                        <th class="fg">%</th>
+                        <th class="3pt">%</th>
+                        <th class="ft">%</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <div class="rightPanel playerList hidden-xs hidden-sm col-md-2">
                 <ul>
-                    <li class="benchPlayer">(Bench)</li>
+                    <!--Give all players playerNameList, but still differentiate starters and bench?-->
+                    <li>(On Floor)</li>
+                    <li class="playerNameList playerOnFloor activePlayer"> D.Lillard </li>
+                    <li class="playerNameList playerOnFloor"> C.J.McCollum </li>
+                    <li class="playerNameList playerOnFloor"> M.Harkless </li>
+                    <li class="playerNameList playerOnFloor"> M.Plumlee </li>
+                    <li class="playerNameList playerOnFloor"> A.Aminu </li>
+                    <li>(Bench)</li>
                     <li class="benchPlayer"> M.Leonard </li>
                     <li class="benchPlayer"> E.Davis </li>
                     <li class="benchPlayer"> N.Vonleh </li>
@@ -53,404 +420,55 @@
                 </ul>
             </div>
 
-            <div class="statPanel col-sm-8" id="regStatPanel">
-                <h1> STAT PANEL </h1>
-                <table class="table table-striped">         <!-- Check Bootstrap "Tables" section for designs -->
-                    <thead>
-                    <tr>
-                        <th class="name">Starters</th>
-                        <th class="fg">FG</th>
-                        <th class="3pt">3PT</th>
-                        <th class="ft">FT</th>
-                        <th class="oreb">oreb</th>
-                        <th class="dreb">dreb</th>
-                        <th class="reb">reb</th>
-                        <th class="ast">ast</th>
-                        <th class="stl">stl</th>
-                        <th class="blk">blk</th>
-                        <th class="to">to</th>
-                        <th class="pf">pf</th>
-                        <th class="plusminus">+/-</th>
-                        <th class="pts">pts</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="name" id="lillard">D.Lillard</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">C.J.McCollum</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">M.Harkless</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">A.Aminu</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">M.Plumlee</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <th>Bench</th>
-                        <th class="fg">FG</th>
-                        <th class="3pt">3PT</th>
-                        <th class="ft">FT</th>
-                        <th class="oreb">oreb</th>
-                        <th class="dreb">dreb</th>
-                        <th class="reb">reb</th>
-                        <th class="ast">ast</th>
-                        <th class="stl">stl</th>
-                        <th class="blk">blk</th>
-                        <th class="to">to</th>
-                        <th class="pf">pf</th>
-                        <th class="plusminus">+/-</th>
-                        <th class="pts">pts</th>
-                    </tr> <!-- Bench Header -->
-                    <tr>
-                        <td class="name">M.Leonard</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">E.Davis</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">N.Vonleh</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">A.Crabbe</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <td class="name">E.Turner</td>
-                        <td class="fg">FG</td>
-                        <td class="3pt">3PT</td>
-                        <td class="ft">FT</td>
-                        <td class="oreb">oreb</td>
-                        <td class="dreb">dreb</td>
-                        <td class="reb">reb</td>
-                        <td class="ast">ast</td>
-                        <td class="stl">stl</td>
-                        <td class="blk">blk</td>
-                        <td class="to">to</td>
-                        <td class="pf">pf</td>
-                        <td class="plusminus">+/-</td>
-                        <td class="pts">pts</td>
-                    </tr>
-                    <tr>
-                        <th>Team</th>
-                        <th class="fg">FG</th>
-                        <th class="3pt">3PT</th>
-                        <th class="ft">FT</th>
-                        <th class="oreb">oreb</th>
-                        <th class="dreb">dreb</th>
-                        <th class="reb">reb</th>
-                        <th class="ast">ast</th>
-                        <th class="stl">stl</th>
-                        <th class="blk">blk</th>
-                        <th class="to">to</th>
-                        <th class="pf">pf</th>
-                        <th class="plusminus"></th>
-                        <th class="pts">pts</th>
-                    </tr>
-                    <tr>
-                        <th>SEE ESPN.COM</th>
-                        <th class="fg">FG</th>
-                        <th class="3pt">3PT</th>
-                        <th class="ft">FT</th>
-                        <th class="oreb"></th>
-                        <th class="dreb"></th>
-                        <th class="reb"></th>
-                        <th class="ast"></th>
-                        <th class="stl"></th>
-                        <th class="blk"></th>
-                        <th class="to"></th>
-                        <th class="pf"></th>
-                        <th class="plusminus"></th>
-                        <th class="pts"></th>
-                    </tr>
-                    </tbody>
-                    <!-- Begin Bench -->
-                </table>
-            </div>
-
-            <div class="statPanel col-sm-8 hidden" id="advStatPanel">
-                <h1>ADVANCED STAT PANEL </h1>
-                <table class="table table-striped">         <!-- Check Bootstrap "Tables" section for designs -->
-                    <thead>
-                    <tr>
-                        <th class="name">Starters</th>
-                        <th class="oreb">True Shooting %</th>
-                        <th class="min">EFG Effective Field Goal %</th>
-                        <th class="fg">FTR Free Throw Rate</th>
-                        <th class="3pt">TR% Total Rebounding %</th>
-                        <th class="ft">HAR Hollinger Assist Ratio</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="name">PG</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">SG</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">SF</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">PF</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">C</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    </tbody>
-                    <!-- Begin Bench -->
-                    <thead>
-                    <tr>
-                        <th class="name">Bench</th>
-                        <th class="oreb">TS%</th>
-                        <th class="min">EFG</th>
-                        <th class="fg">FTR</th>
-                        <th class="3pt">TR%</th>
-                        <th class="ft">HAR</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="name">PG</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">SG</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">SF</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">PF</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    <tr>
-                        <td class="name">C</td>
-                        <td class="">TS%</th>
-                        <td class="">EFG</th>
-                        <td class="">FTR</th>
-                        <td class="">TR%</th>
-                        <td class="">HAR</th>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="rightPanel playerList col-sm-2">
-                <ul>
-                    <li>(On Floor)</li>
-                    <li class="playerOnFloor activePlayer"> D.Lillard </li>
-                    <li class="playerOnFloor"> C.J.McCollum </li>
-                    <li class="playerOnFloor"> M.Harkless </li>
-                    <li class="playerOnFloor"> M.Plumlee </li>
-                    <li class="playerOnFloor"> A.Aminu </li>
-                </ul>
-            </div>
-
 
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-2">
-                <h4> Options button? Confirm player swap button?</h4>
-                <button class="btn btn-default btn-group-row">OPTIONS</button>
+    <div class="container-fluid bottomSection">
+        <div class="row buttonRow">
+            <div class=" hidden-xs col-sm-2 optionBox">
+                <!--<h4>Confirm player swap button?</h4>-->
+                <button class="btn btn-default btn-group-row" id="optionsButton">OPTIONS <i class="fa fa-cog" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-group-row" id="editButton">EDIT <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-group-row hidden" id="confirmEditButton">Confirm?</button>
+                <button class="btn btn-default btn-group-row" id="confirmAllEditButton">Confirm All?</button>
             </div>
-            <div class="buttonPanel col-sm-8">
-                <div class="leftButtonPanel col-sm-2">
-                    <button class="btn btn-primary btn-lg btn-group-row" id="regStatsButton">Reg.Stats</button>
+            <div class="buttonPanel hidden-xs col-sm-8">
+                <div class="leftButtonPanel col-sm-3">
+                    <button class="btn btn-primary btn-group-row btn-block" id="regStatsButton">Reg.Stats</button>
                 </div>
-                <div class="centerButtonPanel col-sm-8">
-                    <div class="btn-group-row btn-block">
-                        <button class="btn btn-success btn-lg">FG</button> <!-- Brings up options that would give option for fg, 3pt, ft. Then option for miss/make -->
-                        <button class="btn btn-danger btn-lg">FG</button> <!-- Have this slot be missed FG button for fg, 3pt, ft? -->
-                        <button class="btn btn-danger hidden">Hidden FG</button>
-                        <button class="btn btn-danger hidden">Hidden 3PT</button>
-                        <button class="btn btn-danger hidden">Hidden FT</button>
-                        <button class="btn btn-danger hidden">Hidden FT</button>
+                <div class="centerButtonPanel col-sm-6">
+                    <div class="btn-group-row btn-block centerButtonDiv">
+                        <button class="btn btn-success subMadeFG hidden" id="hiddenFTMade">Hidden FT</button>
+                        <button class="btn btn-success subMadeFG hidden" id="hidden3PTMade">Hidden 3PT</button>
+                        <button class="btn btn-success subMadeFG hidden" id="hiddenFGMade">Hidden FG</button>
+                        <button class="btn btn-success btn-lg" id="madeFGButton">FG</button> <!-- Brings up options that would give option for fg, 3pt, ft. Then option for miss/make -->
+                        <!--Hide the "other" FGButton when one is clicked. That way it won't stack weird if both are clicked-->
+                        <button class="btn btn-danger btn-lg" id="missedFGButton">FG</button> <!-- Have this slot be missed FG button for fg, 3pt, ft? -->
+                        <button class="btn btn-danger subMissedFG hidden" id="hiddenFGMissed">Hidden FG</button>
+                        <button class="btn btn-danger subMissedFG hidden" id="hidden3PTMissed">Hidden 3PT</button>
+                        <button class="btn btn-danger subMissedFG hidden" id="hiddenFTMissed">Hidden FT</button>
                     </div>
-                    <div class="btn-group-row btn-block">
-                        <button class="btn btn-default btn-lg" id="rbdButton">Rbd</button>
-                        <button class="btn btn-default btn-lg" id="astButton">Ast</button>
-                        <button class="btn btn-default btn-lg" id="stlButton">Stl</button>
-                        <button class="btn btn-default btn-lg" id="blkButton">Blk</button>
+                    <div class="btn-group-row btn-block centerButtonDiv">
+                        <button class="btn btn-default subrbd hidden" id="orbd"> Off.Reb</button>
+                        <button class="btn btn-default subrbd hidden" id="drbd"> Def.Reb</button>
+                        <button class="btn btn-default" id="rbdButton">Rbd</button>
+                        <button class="btn btn-default" id="astButton">Ast</button>
+                        <button class="btn btn-default" id="stlButton">Stl</button>
+                        <button class="btn btn-default" id="blkButton">Blk</button>
                     </div>
-                    <div class="btn-group-row btn-block">
-                        <button class="btn btn-default btn-lg" id="toButton">TO</button>
-                        <button class="btn btn-default btn-lg" id="pfButton">PF</button>
+                    <div class="btn-group-row btn-block centerButtonDiv">
+                        <button class="btn btn-default" id="toButton">TO</button>
+                        <button class="btn btn-default" id="pfButton">PF</button>
                     </div>
 
                 </div>
 
-                <div class="rightButtonPanel col-sm-2">
-                    <button class="btn btn-primary btn-lg btn-group-row" id="advStatsButton">Adv.Stats</button>
+                <div class="rightButtonPanel col-sm-3">
+                    <button class="btn btn-primary btn-group-row btn-block" id="advStatsButton">Adv.Stats</button>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <h4>DONE button. Would remove player lists on the side and buttons, just display stats.</h4>
+            <div class="doneBox hidden-xs col-sm-2">
+                <!--<h4>DONE button. Would remove player lists on the side and buttons, just display stats.</h4>-->
                 <button class="btn btn-default btn-group-row"> DONE </button>
                 <button class="btn btn-default btn-group-row"> Max Preps? </button>
             </div>
