@@ -23,15 +23,31 @@
 <div id="fullSize">
     <div class="container-fluid topSection">
         <div class="row">
-            <section class="teamOverviewBanner col-sm-12" id="test">
-                <div class="col-sm-6" id="homeTeam">
-                    <h1 class="col-sm-8" id="homeTeamName">HOME TEAM</h1>
-                    <h1 class="col-sm-4" id="homeTeamScore"> 0 </h1>
-
+            <section class="teamOverviewBanner col-sm-12">
+                <div class="col-sm-2 teamRandomStats">
+                    <p id="timeout30">30: 3</p>
+                    <p id="timeoutFull">Full: 2</p>
+                    <p id="firstHalfHomeFoul">Fouls: </p>
                 </div>
-                <div class="col-sm-6" id="awayTeam">
-                    <h1 class="col-sm-8" id="awayTeamName">AWAY TEAM</h1>
+                <div class="col-sm-3" id="homeTeam">
+                    <h1 class="col-sm-8 homeTeamName teamName hidden"></h1>
+                    <input class="col-sm-8 homeTeamName teamNameInput" placeholder="HomeTeam" />
+                    <h1 class="col-sm-4" id="homeTeamScore"> 0 </h1>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block btn-primary" id="poss"><strong>POSS</strong> </button>
+                    <i class="fa fa-arrow-left fa-2x" id="homeArrow" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-right fa-2x hidden" id="awayArrow" aria-hidden="true"></i>
+                </div>
+                <div class="col-sm-3" id="awayTeam">
                     <h1 class="col-sm-4" id="awayTeamScore"> 0 </h1>
+                    <input class="col-sm-8 teamNameInput" placeholder="AwayTeam"/>
+                    <h1 class="col-sm-8 hidden teamName" id=""></h1>
+                </div>
+                <div class="col-sm-2 teamRandomStats">
+                    <p>30: 3</p>
+                    <p>Full: 2</p>
+                    <p>Fouls: </p>
                 </div>
             </section>
         </div>
@@ -39,26 +55,13 @@
 
     <div class="container-fluid midSection">
         <div class="row">
-            <!--<div class="leftPanel playerList hidden-xs hidden-sm col-md-2">-->
-                <!--<ul>-->
-                    <!--<li class="benchPlayer">(Bench)</li>-->
-                    <!--<li class="benchPlayer"> M.Leonard </li>-->
-                    <!--<li class="benchPlayer"> E.Davis </li>-->
-                    <!--<li class="benchPlayer"> N.Vonleh </li>-->
-                    <!--<li class="benchPlayer"> J.Layman </li>-->
-                    <!--<li class="benchPlayer"> S.Napier </li>-->
-                    <!--<li class="benchPlayer"> E.Turner </li>-->
-                    <!--<li class="benchPlayer"> A.Crabbe </li>-->
-                    <!--<li class="benchPlayer"> P.Connaughton </li>-->
-                <!--</ul>-->
-            <!--</div>-->
-
             <div class="statPanel col-xs-12 col-sm-12 col-md-10" id="regStatPanel">
-                <h1> STAT PANEL </h1>
-                <table class="table table-bordered table-hover">         <!-- Check Bootstrap "Tables" section for designs -->
+                <h1> Stat Panel </h1>
+                <table class="table table-bordered">         <!-- Check Bootstrap "Tables" section for designs -->
                     <thead>
                     <tr>
-                        <th>Starters</th>
+                        <th>On Floor</th>
+                        <th class="action"> Action </th>
                         <th class="regStat">FG</th>
                         <th class="regStat">3PT</th>
                         <th class="regStat">FT</th>
@@ -71,17 +74,20 @@
                         <th class="regStat">TO</th>
                         <th class="regStat">PF</th>
                         <th class="regStat">PTS</th>
-                        <th class="advStat hidden">TS%</th>
-                        <th class="advStat hidden">EFG%</th>
-                        <th class="advStat hidden">FTR</th>
-                        <th class="advStat hidden">TR%</th>
-                        <th class="advStat hidden">HAR</th>
+                        <th class="advStat TS hidden">TS%</th>
+                        <th class="advStat eFG hidden">eFG%</th>
+                        <th class="advStat ASTTO hidden">AST/TO</th>
+                        <th class="advStat TOV hidden">TOV%</th>
+                        <th class="advStat PPP hidden">PPP</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <!--Need a class to tie first slot in both reg stats and adv stats together so both will update upon singular edit-->
-                        <td class="name p1" id="lillard">D.Lillard</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -100,14 +106,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">C.J.McCollum</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -126,14 +135,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">M.Harkless</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -152,14 +164,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">A.Crabbe</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -178,14 +193,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">Jusuf Nurkic</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -204,15 +222,15 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
                      <!--Bench Header-->
                     <tr class="benchHeader">
                         <th>Bench</th>
+                        <th class="action"> Action </th>
                         <th class="regStat">FG</th>
                         <th class="regStat">3PT</th>
                         <th class="regStat">FT</th>
@@ -225,14 +243,17 @@
                         <th class="regStat">TO</th>
                         <th class="regStat">PF</th>
                         <th class="regStat">PTS</th>
-                        <th class="advStat hidden">TS%</th>
-                        <th class="advStat hidden">EFG%</th>
-                        <th class="advStat hidden">FTR</th>
-                        <th class="advStat hidden">TR%</th>
-                        <th class="advStat hidden">HAR</th>
+                        <th class="advStat TS hidden">TS%</th>
+                        <th class="advStat eFG hidden">eFG%</th>
+                        <th class="advStat ASTTO hidden">AST/TO</th>
+                        <th class="advStat TOV hidden">TOV%</th>
                     </tr>
-                    <tr>
-                        <td class="name">M.Leonard</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -251,14 +272,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">E.Davis</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -277,14 +301,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">N.Vonleh</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -303,14 +330,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">A.Aminu</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -329,14 +359,17 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
-                    <tr>
-                        <td class="name">E.Turner</td>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -355,14 +388,159 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
+                    </tr>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
+                    </tr>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
+                    </tr>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
+                    </tr>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
+                    </tr>
+                    <tr class="playerRow">
+                        <td class="name"></td>
+                        <td class="action">
+                            <div class="moveButton actionButtons"><strong>MOVE</strong></div>
+                            <div class="hereButton actionButtons hidden"><strong>HERE</strong></div>
+                        </td>
+                        <td class="fg regStat">0/0</td>
+                        <td class="fgm hidden">0</td>
+                        <td class="fga hidden">0</td>
+                        <td class="3pt regStat">0/0</td>
+                        <td class="3ptm hidden">0</td>
+                        <td class="3pta hidden">0</td>
+                        <td class="ft regStat">0/0</td>
+                        <td class="fta hidden">0</td>
+                        <td class="ftm hidden">0</td>
+                        <td class="oreb regStat">0</td>
+                        <td class="dreb regStat">0</td>
+                        <td class="reb regStat">0</td>
+                        <td class="ast regStat">0</td>
+                        <td class="stl regStat">0</td>
+                        <td class="blk regStat">0</td>
+                        <td class="to regStat">0</td>
+                        <td class="pf regStat">0</td>
+                        <td class="pts regStat">0</td>
+                        <td class="advStat TS hidden">-</td>
+                        <td class="advStat eFG hidden">-</td>
+                        <td class="advStat ASTTO hidden">-</td>
+                        <td class="advStat TOV hidden">-</td>
                     </tr>
                     <tr class="teamRowStats">
                         <th>Team</th>
+                        <td class="action"></td>
                         <td class="fg regStat">0/0</td>
                         <td class="fgm hidden">0</td>
                         <td class="fga hidden">0</td>
@@ -381,17 +559,18 @@
                         <td class="to regStat">0</td>
                         <td class="pf regStat">0</td>
                         <td class="pts regStat">0</td>
-                        <td class="advStat hidden">TS%</td>
-                        <td class="advStat hidden">EFG%</td>
-                        <td class="advStat hidden">FTR</td>
-                        <td class="advStat hidden">TR%</td>
-                        <td class="advStat hidden">HAR</td>
+                        <td class="advStat teamTS hidden">-</td>
+                        <td class="advStat teamEFG hidden">-</td>
+                        <td class="advStat teamASTTO hidden">-</td>
+                        <td class="advStat teamTOV hidden">-</td>
+                        <td class="advStat teamPPP hidden">-</td>
                     </tr>
                     <tr class="teamRowPercent">
-                        <th>SEE ESPN.COM</th>
-                        <th class="fg">%</th>
-                        <th class="3pt">%</th>
-                        <th class="ft">%</th>
+                        <th>Team %</th>
+                        <th></th>
+                        <th class="fg">-</th>
+                        <th class="3pt">-</th>
+                        <th class="ft">-</th>
                     </tr>
                     </tbody>
                 </table>
@@ -401,22 +580,23 @@
 
             <div class="rightPanel playerList hidden-xs hidden-sm col-md-2">
                 <ul>
-                    <!--Give all players playerNameList, but still differentiate starters and bench?-->
                     <li>(On Floor)</li>
-                    <li class="playerNameList playerOnFloor activePlayer"> D.Lillard </li>
-                    <li class="playerNameList playerOnFloor"> C.J.McCollum </li>
-                    <li class="playerNameList playerOnFloor"> M.Harkless </li>
-                    <li class="playerNameList playerOnFloor"> M.Plumlee </li>
-                    <li class="playerNameList playerOnFloor"> A.Aminu </li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
                     <li>(Bench)</li>
-                    <li class="benchPlayer"> M.Leonard </li>
-                    <li class="benchPlayer"> E.Davis </li>
-                    <li class="benchPlayer"> N.Vonleh </li>
-                    <li class="benchPlayer"> J.Layman </li>
-                    <li class="benchPlayer"> S.Napier </li>
-                    <li class="benchPlayer"> E.Turner </li>
-                    <li class="benchPlayer"> A.Crabbe </li>
-                    <li class="benchPlayer"> P.Connaughton </li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
+                    <li class="playerNameList">-</li>
                 </ul>
             </div>
 
@@ -426,11 +606,15 @@
     <div class="container-fluid bottomSection">
         <div class="row buttonRow">
             <div class=" hidden-xs col-sm-2 optionBox">
-                <!--<h4>Confirm player swap button?</h4>-->
-                <button class="btn btn-default btn-group-row" id="optionsButton">OPTIONS <i class="fa fa-cog" aria-hidden="true"></i></button>
-                <button class="btn btn-default btn-group-row" id="editButton">EDIT <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button class="btn btn-default btn-group-row hidden" id="optionsButton">OPTIONS <i class="fa fa-cog fa-spin" aria-hidden="true"></i></button>
+
+                <!--<button class="btn btn-default btn-group-row hidden" id="editTeamButton" >Edit Team <i class="fa fa-pencil" aria-hidden="true"></i></button>-->
+                <!--<button class="btn btn-default btn-sm btn-block btn-group-row hidden" id="editHomeTeam" >Home Team</button>-->
+                <!--<button class="btn btn-default btn-sm btn-block btn-group-row hidden" id="editAwayTeam" >Away Team</button>-->
+
+                <button class="btn btn-default btn-group-row hidden disabled" id="editButton" >Edit Player <i class="fa fa-pencil" aria-hidden="true"></i></button>
                 <button class="btn btn-default btn-group-row hidden" id="confirmEditButton">Confirm?</button>
-                <button class="btn btn-default btn-group-row" id="confirmAllEditButton">Confirm All?</button>
+                <button class="btn btn-default btn-group-row" id="confirmAllEditButton">Confirm All</button>
             </div>
             <div class="buttonPanel hidden-xs col-sm-8">
                 <div class="leftButtonPanel col-sm-3">
@@ -441,24 +625,23 @@
                         <button class="btn btn-success subMadeFG hidden" id="hiddenFTMade">Hidden FT</button>
                         <button class="btn btn-success subMadeFG hidden" id="hidden3PTMade">Hidden 3PT</button>
                         <button class="btn btn-success subMadeFG hidden" id="hiddenFGMade">Hidden FG</button>
-                        <button class="btn btn-success btn-lg" id="madeFGButton">FG</button> <!-- Brings up options that would give option for fg, 3pt, ft. Then option for miss/make -->
-                        <!--Hide the "other" FGButton when one is clicked. That way it won't stack weird if both are clicked-->
-                        <button class="btn btn-danger btn-lg" id="missedFGButton">FG</button> <!-- Have this slot be missed FG button for fg, 3pt, ft? -->
+                        <button class="btn btn-success btn-lg statButton" id="madeFGButton" disabled="true">FG</button>
+                        <button class="btn btn-danger btn-lg statButton" id="missedFGButton" disabled="true">FG</button>
                         <button class="btn btn-danger subMissedFG hidden" id="hiddenFGMissed">Hidden FG</button>
                         <button class="btn btn-danger subMissedFG hidden" id="hidden3PTMissed">Hidden 3PT</button>
                         <button class="btn btn-danger subMissedFG hidden" id="hiddenFTMissed">Hidden FT</button>
                     </div>
                     <div class="btn-group-row btn-block centerButtonDiv">
-                        <button class="btn btn-default subrbd hidden" id="orbd"> Off.Reb</button>
-                        <button class="btn btn-default subrbd hidden" id="drbd"> Def.Reb</button>
-                        <button class="btn btn-default" id="rbdButton">Rbd</button>
-                        <button class="btn btn-default" id="astButton">Ast</button>
-                        <button class="btn btn-default" id="stlButton">Stl</button>
-                        <button class="btn btn-default" id="blkButton">Blk</button>
+                        <button class="btn btn-default statButton subrbd hidden" id="orbd"> Off.Reb</button>
+                        <button class="btn btn-default statButton subrbd hidden" id="drbd"> Def.Reb</button>
+                        <button class="btn btn-default statButton" id="rbdButton" disabled="true">Rbd</button>
+                        <button class="btn btn-default statButton" id="astButton" disabled="true">Ast</button>
+                        <button class="btn btn-default statButton" id="stlButton" disabled="true">Stl</button>
+                        <button class="btn btn-default statButton" id="blkButton" disabled="true">Blk</button>
                     </div>
                     <div class="btn-group-row btn-block centerButtonDiv">
-                        <button class="btn btn-default" id="toButton">TO</button>
-                        <button class="btn btn-default" id="pfButton">PF</button>
+                        <button class="btn btn-default statButton" id="toButton" disabled="true">TO</button>
+                        <button class="btn btn-default statButton" id="pfButton" disabled="true">PF</button>
                     </div>
 
                 </div>
@@ -468,9 +651,9 @@
                 </div>
             </div>
             <div class="doneBox hidden-xs col-sm-2">
-                <!--<h4>DONE button. Would remove player lists on the side and buttons, just display stats.</h4>-->
-                <button class="btn btn-default btn-group-row"> DONE </button>
-                <button class="btn btn-default btn-group-row"> Max Preps? </button>
+                <button class="btn btn-default btn-group-row" id="doneButton"> DONE </button>
+                <button class="btn btn-success btn-sm btn-group-row btn-block hidden" id="doneYes"> YES </button>
+                <button class="btn btn-danger btn-sm btn-group-row btn-block hidden" id="doneNo"> NO </button>
             </div>
         </div>
 
