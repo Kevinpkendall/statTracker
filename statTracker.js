@@ -1,5 +1,10 @@
-//when doc is ready?
 $('document').ready(function() {
+
+
+    //init bootstrap popovers
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
 ////////////////////////////////////////////FUNCTIONS
 
     function trueShootingPercentage (totalShots, totalShotsFT, points, active, teamTotalShots, teamTotalShotsFT,teamPTS) {
@@ -38,24 +43,72 @@ $('document').ready(function() {
         $('.teamPPP').html(ppp.toFixed(1));
     }
 
-
     function swapActiveClass(temp) {
-        $(temp).siblings('li').removeClass("activeli");
-        $(temp).toggleClass("activeli");
-        $(temp).siblings('li').removeClass("info1");
-        $(temp).toggleClass("info1");
+        if ($('.nameInputs').length == 0) {
+            $(temp).parent().toggleClass("active info");
+            $(temp).parent().siblings('tr').removeClass("activeli");
+            $(temp).parent().siblings('tr').removeClass("active");
+            $(temp).parent().toggleClass("activeli");
+            $(temp).parent().siblings('tr').removeClass("info1");
+            $(temp).parent().siblings('tr').removeClass("info");
+            $(temp).parent().toggleClass("info1");
 
-        $('#editButton').toggleClass("disabled");
-        //
-        $('.active').removeClass('active');
-        $('.info').removeClass('info');
-        $('.movePlayer').removeClass('movePlayer');
+            //Enable stat buttons when a player is selected
+            if ($('.active').length > 0) {
+                $('.editButton, .statButton').removeClass("disabled");
+            } else {
+                $('.editButton, .statButton').addClass("disabled");
+            }
+            $('.movePlayer').removeClass('movePlayer');
+        }
+
     }
 ////////////////////////////////////////////
+////////////////////////////////////////////CONSTRUCTOR FUNCTION
+
+    function Player (name, id) {
+        this.id = id;
+        this.name = name;
+        this.points = 0;
+        this.rebounds = 0;
+        this.oRebounds = 0;
+        this.dRebounds = 0;
+        this.steals = 0;
+        this.assists = 0;
+        this.blocks = 0;
+        this.turnovers = 0;
+        this.fouls = 0;
+        this.fgm = 0;
+        this.fga = 0;
+        this.threePtMade = 0;
+        this.threePtA = 0;
+        this.fta = 0;
+        this.ftm = 0;
+    }
+    var Team = {
+        points: 0,
+        rebounds: 0,
+        oRebounds: 0,
+        dRebounds: 0,
+        steals: 0,
+        assists: 0,
+        blocks: 0,
+        turnovers: 0,
+        fouls: 0,
+        fgm: 0,
+        fga: 0,
+        threePtMade: 0,
+        threePtA: 0,
+        fta: 0,
+        ftm: 0
+    }
+////////////////////////////////////////////
+
 //////////////////////////////////////////// VARIABLES
 
     var populatePlayers = [];
     var populateTeamNames = [];
+    var populatePlayerObjects = [];
     var playerName1;
     var movePlayer1;
     var playerName2;
@@ -63,15 +116,14 @@ $('document').ready(function() {
     var movePlayer1Row;
     var movePlayer2Row;
     var saveName;
+    var currentName;
 
-    var regStatPanel = $('#regStatPanel');
-    var advStatPanel = $('#advStatPanel');
 ////////////////////////////////////////////
 
     //Page loads with all .name sections being inputs
     $('<input class="nameInputs" placeholder="Player Name"/>').appendTo($('.name'));
 
-    $("#regStatsButton").click(function () {
+    $("#regStatsButton, #mobileRegStatsButton").click(function () {
         $('.advStat').addClass("hidden");
         $('.regStat').removeClass("hidden");
         $('.centerButtonDiv').removeClass("hidden");
@@ -79,7 +131,7 @@ $('document').ready(function() {
         $('.statPanel h1').html("STAT PANEL");
     });
     //Change all regStat to hidden and all advStat off of hidden
-    $("#advStatsButton").click(function () {
+    $("#advStatsButton, #mobileAdvStatsButton").click(function () {
         $('.regStat').addClass("hidden");
         $('.advStat').removeClass("hidden");
         $('.centerButtonDiv').addClass("hidden");
@@ -88,32 +140,11 @@ $('document').ready(function() {
     });
 
     //TODO
-//Add functionality to FG buttons.
-    //When Red FG button is pressed, the fg,ft,3pt buttons appear
+    // $('#optionsButton').on("click", function () {
+    //
+    // });
 
-    $('#missedFGButton').on("click", function () {
-        $('.subMissedFG').toggleClass("hidden");
-        $('#madeFGButton').toggleClass("hidden");
-    });
-    $('.subMissedFG').on("click",function() {
-        $('#madeFGButton').toggleClass("hidden");
-    });
-    $('#madeFGButton').on("click", function () {
-        $('.subMadeFG').toggleClass("hidden");
-        $('#missedFGButton').toggleClass("hidden");
-    });
-    $('.subMadeFG').on("click",function() {
-        $('#missedFGButton').toggleClass("hidden");
-    });
-    $('#rbdButton').on("click", function () {
-        $('.subrbd').toggleClass("hidden");
-    });
-
-    //-----------------------------------------------------------------------------------------------------------------
-    $('#optionsButton').on("click", function () {
-
-    });
-    $('#editButton').on("click", function () {
+    $('.editButton').on("click", function () {
         console.log("edit button 4");
 
         //save name in case user confirms a blank input
@@ -121,41 +152,53 @@ $('document').ready(function() {
         $('.active').children('.name').html("");
         $('<input class="nameInputs" placeholder="Player Name" />').appendTo($('.active').children('.name'));
         //disable stat buttons when editing name
-        $('.rightPanel, #editButton, .moveButton').addClass('disabled');
-        $('.subMissedFG, .subMadeFG').addClass("hidden");
-        $('.statButton').prop("disabled", true);
-        $('#confirmEditButton, #missedFGButton, #madeFGButton').removeClass('hidden');
+        $('.rightPanel, .editButton, .moveButton').addClass('disabled');
+        $('.statButton').addClass("disabled");
+        $('.confirmEditButton, #missedFGButton, .madeFGButton').removeClass('hidden');
     });
-    $('#confirmEditButton').on("click", function () {
+
+
+    $('.confirmEditButton').on("click", function () {
         console.log("confirm edit button");
         var highlightedName = $('.active').children('.name').children('.nameInputs').val();
         $('.active').children('.name').text(highlightedName);
-        $('.activeli').html(highlightedName);
+
         //if user enters nothing (""), the name will stay.
         if (highlightedName == "") {
             $('.active').children('.name').html(saveName);
-            $('.activeli').html(saveName);
         }
-        $('.statButton').prop("disabled", false);
-        $('.rightPanel, #editButton, .moveButton').removeClass('disabled');
-        $('#confirmEditButton').addClass("hidden");
+
+        //update array with new player name that was typed in
+        $('.name').each(function (i , arr) {
+            if ($(this).html() != "") {
+                populatePlayers[i] = $(this).html();
+                // console.log(populatePlayers[i]);
+            }
+        });
+
+        $('.statButton').removeClass("disabled");
+        $('.rightPanel, .editButton, .moveButton').removeClass('disabled');
+        $('.confirmEditButton').addClass("hidden");
     });
-    $('#confirmAllEditButton').on("click", function () {
-        console.log("confirm all edit button 3");
+
+    $('.confirmAllEditButton').on("click", function () {
 
         //Reveal other buttons once names are confirmed
         $('#optionsButton').removeClass("hidden");
-        $('#editButton').removeClass("hidden");
+        $('.editButton').removeClass("hidden");
         $('#editTeamButton').removeClass("hidden");
 
         //populate array with all player names typed in to inputs
         for (var i = 0; i < $('.nameInputs').length; i++) {
-            populatePlayers[i] = $('.nameInputs')[i].value;
-            console.log(populatePlayers[i]);
+            if ($('.nameInputs')[i].value != "") {
+                populatePlayers[i] = $('.nameInputs')[i].value;
+                // console.log(populatePlayers[i]);
+            }
         }
+        //populate array with team names typed in to inputs
         for (var j = 0; j < $('.teamNameInput').length; j++) {
             populateTeamNames[j] = $('.teamNameInput')[j].value;
-            console.log(populateTeamNames[j]);
+            // console.log(populateTeamNames[j]);
         }
         $(this).addClass("hidden");
 
@@ -168,41 +211,33 @@ $('document').ready(function() {
         $('.teamName').removeClass("hidden");
         $('.teamNameInput').addClass("hidden");
 
-        //Iterates through all .playerNameList to populate all names that were typed in.
-        $('.playerNameList').each(function (i , arr) {
-            if ($(this).html() != "") {
-                $(this).html(populatePlayers[i]);
-            }
-        });
-        //Iterates through all .playerNameList to check for and hide empty slots
-        $('.playerNameList').each(function(i, arr) {
-            if ($(this).html() == "") {
-                $(this).addClass("hidden");
-            }
-        });
-        //Iterates through all .name to populate all names that were typed in.
+        //Iterates through all .name to:
         $('.name').each(function (i , arr) {
-            if ($(this).html() != "") {
+            // 1.remove rows that did not have a name typed in
+            if ($(this).children().val() == "") {
+                $(this).parent().remove();
+            }
+            // 2.populate all names that were typed in.
+            else if ($(this).html() != "") {
                 $(this).html(populatePlayers[i]);
             }
         });
-        //Iterates through all .name to check for and hide empty slots
-        $('.name').each(function(i, arr) {
-            if ($(this).html() == "") {
-                $(this).parent().addClass("hidden");
-            }
-        });
+
+        for (var i = 0; i < populatePlayers.length; i++) {
+            populatePlayerObjects[i] = new Player(populatePlayers[i], i);
+            // console.log(populatePlayerObjects[i].name);
+        }
     });         //end confirmalledit button
+
     // $('#editTeamButton').on("click", function () {
     //     $('#editHomeTeam, #editAwayTeam').toggleClass("hidden");
     // });
 
+    //Toggle possession arrow
     $('#poss').on("click", function () {
         $('#homeArrow').toggleClass("hidden");
         $('#awayArrow').toggleClass("hidden");
     });
-
-
 
     $(document).on("click", '.hereButton', function () {
         $('.moveButton').toggleClass("hidden");
@@ -210,11 +245,13 @@ $('document').ready(function() {
         $(this).parent().parent().toggleClass("movePlayer");
     });
 
-
     //Click events for moving players. //   http://stackoverflow.com/questions/20968042/cant-click-button-more-than-one-time-when-append-html-data
     $(document).on("click", ".moveButton", function () {
+
         //when move button is clicked disable all content except for names. toggle availability of everything
-        $('#editButton').toggleClass("disabled");
+        //The disabled class is removed inside the swapActiveClass function
+        $('.editButton').addClass("disabled");
+        $('.statButton').addClass("disabled");
 
         //when move button is clicked deselect all names
         $('.activeli').removeClass('activeli info1');
@@ -227,7 +264,6 @@ $('document').ready(function() {
             $(this).parent().parent().toggleClass("movePlayer");
             $('.moveButton').toggleClass("hidden");
             $('.hereButton').toggleClass("hidden");
-            $('.rightPanel').toggleClass("disabled");
         }
 
 
@@ -254,7 +290,7 @@ $('document').ready(function() {
 
                 //Redisplay sidebar
                 //Iterates through all .playerNameList to populate all names that were typed in.
-                $('.playerNameList').each(function (i, arr) {
+                $('.name').each(function (i, arr) {
                     if ($(this).html() != "") {
                         $(this).html(populatePlayers[i]);
                     }
@@ -265,349 +301,403 @@ $('document').ready(function() {
 
                 //Remove Highlighting
                 $('.movePlayer').toggleClass('movePlayer');
-                $('.rightPanel').removeClass('disabled');
             }
         });
-    });
 
-    $('.playerNameList').on("click", function() {
+    });
+    
+    $(document).on("click", '.name', function() {
         swapActiveClass(this);
-        //Enable stat buttons when a player is selected
-        $('.statButton').prop("disabled", false);
 
         //store current name
-        var currentName = $('.activeli').html();
-        //change the found names class to active. This is how I highlight names in table when li is clicked.
-        $('td:contains("' + currentName + '")').parent().toggleClass("active info");
+        currentName = $('.active').children('.name').text();
+        console.log(currentName);
+    });
+    
+    //////////          MADE FGS          //////////
+    $(document).on("click", '#hiddenFGMade', function() {
+        /////       /////       /////       /////       /////       /////       /////       /////       /////
+        //                     Implementing new object oriented way of updating stats                      //
 
-        //store variables
         var active = $('.active');
         var teamRowStats = $('.teamRowStats');
-        //Points
-        var points = parseInt(active.children('.pts').html());
 
-        //Go see what is in FG column
-        var madeShots = parseInt(active.children('.fgm').html());
-        var totalShots = parseInt(active.children('.fga').html());
-        //Go see what is in 3pt column
-        var madeShots3 = parseInt(active.children('.3ptm').html());
-        var totalShots3 = parseInt(active.children('.3pta').html());
-        //Go see what is in FT column
-        var madeShotsFT = parseInt(active.children('.ftm').html());
-        var totalShotsFT = parseInt(active.children('.fta').html());
-        //Update all other stats
-        var rbdCounter = parseInt(active.children('.reb').html());
-        var orbdCounter = parseInt(active.children('.oreb').html());
-        var drbdCounter = parseInt(active.children('.dreb').html());
-        var astCounter = parseInt(active.children('.ast').html());
-        var stlCounter = parseInt(active.children('.stl').html());
-        var blkCounter = parseInt(active.children('.blk').html());
-        var toCounter = parseInt(active.children('.to').html());
-        var pfCounter = parseInt(active.children('.pf').html());
-        //Team Row Stats
-        var teamPTS = parseInt(teamRowStats.children('.pts').html());
-        var teamMadeShots = parseInt(teamRowStats.children('.fgm').html());
-        var teamTotalShots = parseInt(teamRowStats.children('.fga').html());
-        var teamMadeShots3 = parseInt(teamRowStats.children('.3ptm').html());
-        var teamTotalShots3 = parseInt(teamRowStats.children('.3pta').html());
-        var teamMadeFT = parseInt(teamRowStats.children('.ftm').html());
-        var teamTotalFT = parseInt(teamRowStats.children('.fta').html());
-        var teamRBD = parseInt(teamRowStats.children('.reb').html());
-        var teamORBD = parseInt(teamRowStats.children('.oreb').html());
-        var teamDRBD = parseInt(teamRowStats.children('.dreb').html());
-        var teamAST = parseInt(teamRowStats.children('.ast').html());
-        var teamSTL = parseInt(teamRowStats.children('.stl').html());
-        var teamBLK = parseInt(teamRowStats.children('.blk').html());
-        var teamTO = parseInt(teamRowStats.children('.to').html());
-        var teamPF = parseInt(teamRowStats.children('.pf').html());
+        //Iterate through playerObjects array
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                console.log(populatePlayerObjects[i].name === currentName);
+                populatePlayerObjects[i].fgm += 1;
+                populatePlayerObjects[i].fga += 1;
+                populatePlayerObjects[i].points += 2;
+                Team.points += 2;
+                Team.fgm += 1;
+                Team.fga += 1;
 
-        //Team Stats
-        if (active.length == 1) {
-            //////////          MADE FGS          //////////
-            //     //if (fgMade button is clicked)
-            $('#hiddenFGMade').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                if (active.length > 0) {
-                    madeShots++;
-                    totalShots++;
-                    points += 2;
-                    teamPTS += 2;
-                    teamMadeShots ++;
-                    teamTotalShots ++;
-                }
-                //Increase Team Points Variable
-                active.children('.fg').html(madeShots + "/" + totalShots);
-                active.children('.fgm').html(madeShots);
-                active.children('.fga').html(totalShots);
-                active.children('.pts').html(points);
-                teamRowStats.children('.pts').html(teamPTS);
-                teamRowStats.children('.fg').html(teamMadeShots + "/" + teamTotalShots);
-                teamRowStats.children('.fgm').html(teamMadeShots);
-                teamRowStats.children('.fga').html(teamTotalShots);
-                var teamFGPercent = teamMadeShots * 100 / teamTotalShots;
-                $('.teamRowPercent').children('.fg').html(teamFGPercent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('#homeTeamScore').html(teamPTS);
-                $('.subMadeFG').addClass("hidden");
-            });
-            $('#hidden3PTMade').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                if (active.length > 0) {
-                    madeShots++;
-                    totalShots++;
-                    madeShots3++;
-                    totalShots3++;
-                    points += 3;
-                    teamPTS += 3;
-                    teamMadeShots ++;
-                    teamTotalShots ++;
-                    teamMadeShots3 ++;
-                    teamTotalShots3 ++;
-                }
+                //Update HTML
+                active.children('.fg').html(populatePlayerObjects[i].fgm + "/" + populatePlayerObjects[i].fga);
+                active.children('.pts').html(populatePlayerObjects[i].points);
+                teamRowStats.children('.pts').html(Team.points);
+                teamRowStats.children('.teamFG').html(Team.fgm + "/" + Team.fga);
+
+                var playerFGPercent = populatePlayerObjects[i].fgm * 100 / populatePlayerObjects[i].fga;
+                active.children('.fgPercent').html(playerFGPercent.toFixed(1) + "%");
+                var teamFGPercent = Team.fgm * 100 / Team.fga;
+                $('.teamRowPercent').children('.teamFG').html(teamFGPercent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, Team.oRebounds, Team.turnovers, Team.points);
+                $('#homeTeamScore').html(Team.points);
+            }
+        }
+    });
+        /////       /////       /////       /////       /////       /////       /////       /////       /////
+
+
+    // $('#hidden3PTMade').on("click", function () {
+    $(document).on("click", '#hidden3PTMade', function() {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                populatePlayerObjects[i].fgm++;
+                populatePlayerObjects[i].fga++;
+                populatePlayerObjects[i].threePtMade++;
+                populatePlayerObjects[i].threePtA++;
+                populatePlayerObjects[i].points += 3;
+                Team.points += 3;
+                Team.fgm++;
+                Team.fga++;
+                Team.threePtMade++;
+                Team.threePtA++;
+
                 //Update all FG tds and 3pt tds
-                active.children('.fg').html(madeShots + "/" + totalShots);
-                active.children('.fgm').html(madeShots);
-                active.children('.fga').html(totalShots);
-                active.children('.3pt').html(madeShots3 + "/" + totalShots3);
-                active.children('.3ptm').html(madeShots3);
-                active.children('.3pta').html(totalShots3);
-                active.children('.pts').html(points);
-                $('#homeTeamScore').html(points);
+                active.children('.fg').html(populatePlayerObjects[i].fgm + "/" + populatePlayerObjects[i].fga);
+                active.children('.3pt').html(populatePlayerObjects[i].threePtMade + "/" + populatePlayerObjects[i].threePtA);
+                active.children('.pts').html(populatePlayerObjects[i].points);
+                $('#homeTeamScore').html(populatePlayerObjects[i].points);
                 //Team
-                teamRowStats.children('.fg').html(teamMadeShots + "/" + teamTotalShots);
-                teamRowStats.children('.fgm').html(teamMadeShots);
-                teamRowStats.children('.fga').html(teamTotalShots);
-                teamRowStats.children('.3pt').html(teamMadeShots3 + "/" + teamTotalShots3);
-                teamRowStats.children('.3ptm').html(teamMadeShots3);
-                teamRowStats.children('.3pta').html(teamTotalShots3);
-                teamRowStats.children('.pts').html(teamPTS);
+                teamRowStats.children('.teamFG').html(Team.fgm + "/" + Team.fga);
+                teamRowStats.children('.team3pt').html(Team.threePtMade + "/" + Team.threePtA);
+                teamRowStats.children('.pts').html(Team.points);
+                //Player Percent
+                var playerFGPercent = populatePlayerObjects[i].fgm * 100 / populatePlayerObjects[i].fga;
+                active.children('.fgPercent').html(playerFGPercent.toFixed(1) + "%");
+                var player3Percent = populatePlayerObjects[i].threePtMade * 100 / populatePlayerObjects[i].threePtA;
+                active.children('.3ptPercent').html(player3Percent.toFixed(1) + "%");
                 //Team Percent
-                var teamFGPercent = teamMadeShots * 100 / teamTotalShots;
-                $('.teamRowPercent').children('.fg').html(teamFGPercent.toFixed(1) + "%");
-                var team3Percent = teamMadeShots3 * 100 / teamTotalShots3;
-                $('.teamRowPercent').children('.3pt').html(team3Percent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('#homeTeamScore').html(teamPTS);
-                $('.subMadeFG').addClass("hidden");
-            });
-            //////////          MISSED FGS          //////////
-            //if (fgMissed button is clicked)
-            //When sub fg button is pressed, adds 1 missed shot to specific player clicked
-            $('#hiddenFGMissed').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                totalShots++;
-                teamTotalShots ++;
-                active.children('.fg').html(madeShots + "/" + totalShots);
-                active.children('.fga').html(totalShots);
-                teamRowStats.children('.fg').html(teamMadeShots + "/" + teamTotalShots);
-                teamRowStats.children('.fga').html(teamTotalShots);
+                var teamFGPercent = Team.fgm * 100 / Team.fga;
+                $('.teamRowPercent').children('.teamFG').html(teamFGPercent.toFixed(1) + "%");
+                var team3Percent = Team.threePtMade * 100 / Team.threePtA;
+                $('.teamRowPercent').children('.team3pt').html(team3Percent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+                $('#homeTeamScore').html(Team.points);
+            }
+        }
+    });
+    //////////          MISSED FGS          //////////
+    //When fg button is pressed, adds 1 missed shot to specific player clicked
+    // $('#hiddenFGMissed').on("click", function () {
+    $(document).on("click", '#hiddenFGMissed', function() {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                populatePlayerObjects[i].fga++;
+                Team.fga++;
+                active.children('.fg').html(populatePlayerObjects[i].fgm + "/" + populatePlayerObjects[i].fga);
+                teamRowStats.children('.teamFG').html(Team.fgm + "/" + Team.fga);
+                teamRowStats.children('.fga').html(Team.fga);
+                var playerFGPercent = populatePlayerObjects[i].fgm * 100 / populatePlayerObjects[i].fga;
+                active.children('.fgPercent').html(playerFGPercent.toFixed(1) + "%");
+                var teamFGPercent = Team.fgm * 100 / Team.fga;
+                $('.teamRowPercent').children('.teamFG').html(teamFGPercent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+            }
+        }
+    });
 
-                var teamFGPercent = teamMadeShots * 100 / teamTotalShots;
-                $('.teamRowPercent').children('.fg').html(teamFGPercent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('.subMissedFG').addClass("hidden");
-            });
-            //else (3ptMissed button was clicked)
-            //When sub 3pt button is pressed, adds 1 missed 3 point shot to 3pt column and FG column
-            $('#hidden3PTMissed').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                totalShots3++;
-                totalShots++;
-                teamTotalShots++;
-                teamTotalShots3++;
-                active.children('.fg').html(madeShots + "/" + totalShots);
-                active.children('.fga').html(totalShots);
-                active.children('.3pt').html(madeShots3 + "/" + totalShots3);
-                active.children('.3pta').html(totalShots3);
+    //When 3pt button is pressed, adds 1 missed shot to 3pt column and FG column
+    $(document).on("click", '#hidden3PTMissed', function() {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                populatePlayerObjects[i].threePtA++;
+                populatePlayerObjects[i].fga++;
+                Team.fga++;
+                Team.threePtA++;
+                active.children('.fg').html(populatePlayerObjects[i].fgm + "/" + populatePlayerObjects[i].fga);
+                active.children('.3pt').html(populatePlayerObjects[i].threePtMade + "/" + populatePlayerObjects[i].threePtA);
                 //Team Fraction
-                teamRowStats.children('.fg').html(teamMadeShots + "/" + teamTotalShots);
-                teamRowStats.children('.fga').html(teamTotalShots);
-                teamRowStats.children('.3pt').html(teamMadeShots3 + "/" + teamTotalShots3);
-                teamRowStats.children('.3pta').html(teamTotalShots3);
-                //Team Percentages
-                var teamFGPercent = teamMadeShots * 100 / teamTotalShots;
-                var team3Percent = teamMadeShots3 * 100 / teamTotalShots3;
-                $('.teamRowPercent').children('.fg').html(teamFGPercent.toFixed(1) + "%");
-                $('.teamRowPercent').children('.3pt').html(team3Percent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('.subMissedFG').addClass("hidden");
-            });
-            //////////          FREE THROWS          //////////
-            $('#hiddenFTMade').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                if ($('.active').length > 0) {
-                    madeShotsFT++;
-                    totalShotsFT++;
-                    points++;
-                    teamPTS++;
-                    teamMadeFT ++;
-                    teamTotalFT ++;
-                }
-                active.children('.ft').html(madeShotsFT + "/" + totalShotsFT);
-                active.children('.ftm').html(madeShotsFT);
-                active.children('.fta').html(totalShotsFT);
-                active.children('.pts').html(points);
-                //
-                teamRowStats.children('.ft').html(teamMadeFT + "/" + teamTotalFT);
-                teamRowStats.children('.ftm').html(teamMadeFT);
-                teamRowStats.children('.fta').html(teamTotalFT);
-                teamRowStats.children('.pts').html(teamPTS);
-                var teamFTPercent = teamMadeFT * 100 / teamTotalFT;
-                $('.teamRowPercent').children('.ft').html(teamFTPercent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('#homeTeamScore').html(teamPTS);
-                $('.subMadeFG').addClass("hidden");
-            });
-            //When sub ft button is pressed, adds 1 missed free throw
-            $('#hiddenFTMissed').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                //if ($('.active').length > 0) {
-                totalShotsFT++;
-                teamTotalFT++;
-                //}
-                active.children('.fta').html(totalShotsFT);
-                active.children('.ft').html(madeShotsFT + "/" + totalShotsFT);
-                //Team Fractions
-                teamRowStats.children('.fta').html(teamTotalFT);
-                teamRowStats.children('.ft').html(teamMadeFT + "/" + teamTotalFT);
+                teamRowStats.children('.teamFG').html(Team.fgm + "/" + Team.fga);
+                teamRowStats.children('.team3pt').html(Team.threePtMade + "/" + Team.threePtA);
+                //Player Percent
+                var playerFGPercent = populatePlayerObjects[i].fgm * 100 / populatePlayerObjects[i].fga;
+                active.children('.fgPercent').html(playerFGPercent.toFixed(1) + "%");
+                var player3Percent = populatePlayerObjects[i].threePtMade * 100 / populatePlayerObjects[i].threePtA;
+                active.children('.3ptPercent').html(player3Percent.toFixed(1) + "%");
                 //Team Percent
-                var teamFTPercent = teamMadeFT * 100 / teamTotalFT;
-                $('.teamRowPercent').children('.ft').html(teamFTPercent.toFixed(1) + "%");
-                trueShootingPercentage(totalShots, totalShotsFT, points, '.active',teamTotalShots,teamTotalFT,teamPTS);
-                effectiveFieldGoalPercentage(madeShots, madeShots3, totalShots, '.active',teamMadeShots,teamMadeShots3,teamTotalShots);
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('.subMissedFG').addClass("hidden");
-            });
+                var teamFGPercent = Team.fgm * 100 / Team.fga;
+                var team3Percent = Team.threePtMade * 100 / Team.threePtA;
+                $('.teamRowPercent').children('.teamFG').html(teamFGPercent.toFixed(1) + "%");
+                $('.teamRowPercent').children('.team3pt').html(team3Percent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+            }
+        }
+    });
+    //////////          FREE THROWS          //////////
+    $(document).on("click", '#hiddenFTMade', function() {
+        console.log("name click test 4");
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                populatePlayerObjects[i].ftm++;
+                populatePlayerObjects[i].fta++;
+                populatePlayerObjects[i].points++;
+                Team.points++;
+                Team.ftm++;
+                Team.fta++;
+                //Player Fractions
+                active.children('.ft').html(populatePlayerObjects[i].ftm + "/" + populatePlayerObjects[i].fta);
+                active.children('.pts').html(populatePlayerObjects[i].points);
+                //Team Fractions
+                teamRowStats.children('.teamFT').html(Team.ftm + "/" + Team.fta);
+                teamRowStats.children('.pts').html(Team.points);
+                //Player Percent
+                var playerFTPercent = populatePlayerObjects[i].ftm * 100 / populatePlayerObjects[i].fta;
+                active.children('.ftPercent').html(playerFTPercent.toFixed(1) + "%");
+                //Team Percent
+                var teamFTPercent = Team.ftm * 100 / Team.fta;
+                $('.teamRowPercent').children('.teamFT').html(teamFTPercent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+                $('#homeTeamScore').html(Team.points);
+            }
+        }
+    });
+    //When sub ft button is pressed, adds 1 missed free throw
+    $(document).on("click", '#hiddenFTMissed', function() {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                populatePlayerObjects[i].fta++;
+                Team.fta++;
+                //Player Fractions
+                active.children('.ft').html(populatePlayerObjects[i].ftm + "/" + populatePlayerObjects[i].fta);
+                //Team Fractions
+                teamRowStats.children('.teamFT').html(Team.ftm + "/" + Team.fta);
+                //Player Percent
+                var playerFTPercent = populatePlayerObjects[i].ftm * 100 / populatePlayerObjects[i].fta;
+                active.children('.ftPercent').html(playerFTPercent.toFixed(1) + "%");
+                //Team Percent
+                var teamFTPercent = Team.ftm * 100 / Team.fta;
+                $('.teamRowPercent').children('.teamFT').html(teamFTPercent.toFixed(1) + "%");
+                trueShootingPercentage(populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].points, '.active', Team.fga, Team.fta, Team.points);
+                effectiveFieldGoalPercentage(populatePlayerObjects[i].fgm, populatePlayerObjects[i].threePtMade, populatePlayerObjects[i].fga, '.active', Team.fgm, Team.threePtMade, Team.fga);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+            }
+        }
+    });
 
-            //////////          OTHER STATS          //////////
-            $('#orbd').on('click', function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
+    //////////          OTHER STATS          //////////
+    $(document).on("click", '#orbd', function() {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
                 //When oRbd button is pressed, adds 1 rebound to specified name
-                orbdCounter++;
-                rbdCounter++;
-                teamORBD++;
-                teamRBD++;
-                active.children('.oreb').html(orbdCounter);
-                active.children('.reb').html(rbdCounter);
-                teamRowStats.children('.oreb').html(teamORBD);
-                teamRowStats.children('.reb').html(teamRBD);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-                $('.subrbd').addClass("hidden");
-            });
-            $('#drbd').on('click', function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                //When dRbd button is pressed, adds 1 rebound to specified name
-                drbdCounter++;
-                rbdCounter++;
-                teamDRBD++;
-                teamRBD++;
-                active.children('.dreb').html(drbdCounter);
-                active.children('.reb').html(rbdCounter);
-                teamRowStats.children('.dreb').html(teamDRBD);
-                teamRowStats.children('.reb').html(teamRBD);
-                $('.subrbd').addClass("hidden");
-            });
-            $('#astButton').on("click", function () {
-                var active = $('.active');
-                var teamRowStats = $('.teamRowStats');
-                //When Ast button is pressed, adds 1 assist to specified name
-                astCounter++;
-                teamAST++;
-                active.children('.ast').html(astCounter);
-                teamRowStats.children('.ast').html(teamAST);
-                //Update ast/to
-                assistToTurnoverRatio (astCounter, toCounter, '.active',teamAST,teamTO);
+                populatePlayerObjects[i].oRebounds++;
+                populatePlayerObjects[i].rebounds++;
+                Team.oRebounds++;
+                Team.rebounds++;
+                active.children('.oreb').html(populatePlayerObjects[i].oRebounds);
+                active.children('.reb').html(populatePlayerObjects[i].rebounds);
+                teamRowStats.children('.oreb').html(Team.oRebounds);
+                teamRowStats.children('.reb').html(Team.rebounds);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+            }
+        }
+    });
+    $(document).on("click", '#drbd', function() {
 
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                //When dRbd button is pressed, adds 1 rebound to specified name
+                populatePlayerObjects[i].dRebounds++;
+                populatePlayerObjects[i].rebounds++;
+                Team.dRebounds++;
+                Team.rebounds++;
+                active.children('.dreb').html(populatePlayerObjects[i].dRebounds);
+                active.children('.reb').html(populatePlayerObjects[i].rebounds);
+                teamRowStats.children('.dreb').html(Team.dRebounds);
+                teamRowStats.children('.reb').html(Team.rebounds);
+            }
+        }
+    });
+    $('#astButton').on("click", function () {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
+                //When Ast button is pressed, adds 1 assist to specified name
+                populatePlayerObjects[i].assists++;
+                Team.assists++;
+                active.children('.ast').html(populatePlayerObjects[i].assists);
+                teamRowStats.children('.ast').html(Team.assists);
+                assistToTurnoverRatio(populatePlayerObjects[i].assists, populatePlayerObjects[i].turnovers, '.active', Team.assists, Team.turnovers);
                 if (active.children('.ASTTO').html() == 'Infinity') {
                     active.children('.ASTTO').html("-");
                 }
                 if ($('.teamASTTO').html() == 'Infinity') {
                     $('.teamASTTO').html("-");
                 }
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-            });
-            $('#stlButton').on("click", function () {
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+            }
+        }
+    });
+    $('#stlButton').on("click", function () {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
                 //When Stl button is pressed, adds 1 steal to specified name
-                stlCounter++;
-                teamSTL++;
-                $('.active').children('.stl').html(stlCounter);
-                $('.teamRowStats').children('.stl').html(teamSTL);
-            });
-            $('#blkButton').on("click", function () {
+                populatePlayerObjects[i].steals++;
+                Team.steals++;
+                $('.active').children('.stl').html(populatePlayerObjects[i].steals);
+                $('.teamRowStats').children('.stl').html(Team.steals);
+            }
+        }
+    });
+    $('#blkButton').on("click", function () {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
                 //When Blk button is pressed, adds 1 block to specified name
-                blkCounter++;
-                teamBLK++;
-                $(".active").children('.blk').html(blkCounter);
-                $('.teamRowStats').children('.blk').html(teamBLK);
-            });
-            $('#toButton').on("click", function () {
+                populatePlayerObjects[i].blocks++;
+                Team.blocks++;
+                $(".active").children('.blk').html(populatePlayerObjects[i].blocks);
+                $('.teamRowStats').children('.blk').html(Team.blocks);
+            }
+        }
+    });
+    $('#toButton').on("click", function () {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
                 //When TO button is pressed, adds 1 block to specified name
-                toCounter++;
-                teamTO++;
-                $(".active").children('.to').html(toCounter);
-                $('.teamRowStats').children('.to').html(teamTO);
-                //Update ast/to
-                assistToTurnoverRatio (astCounter, toCounter, '.active',teamAST,teamTO);
-                //Update TOV%
-                turnoverPercentage(toCounter, totalShots, totalShotsFT, astCounter, '.active',teamTO,teamTotalShots,teamTotalFT,teamAST);
-                pointsPerPossession(teamTotalShots, teamTotalFT, teamORBD, teamTO, teamPTS);
-
-
-            });
-            $('#pfButton').on("click", function () {
+                populatePlayerObjects[i].turnovers++;
+                Team.turnovers++;
+                $(".active").children('.to').html(populatePlayerObjects[i].turnovers);
+                $('.teamRowStats').children('.to').html(Team.turnovers);
+                assistToTurnoverRatio(populatePlayerObjects[i].assists, populatePlayerObjects[i].turnovers, '.active', Team.assists, Team.turnovers);
+                turnoverPercentage(populatePlayerObjects[i].turnovers, populatePlayerObjects[i].fga, populatePlayerObjects[i].fta, populatePlayerObjects[i].assists, '.active', Team.turnovers, Team.fga, Team.fta, Team.assists);
+                pointsPerPossession(Team.fga, Team.fta, Team.oRebounds, Team.turnovers, Team.points);
+            }
+        }
+    });
+    $('#pfButton').on("click", function () {
+        var active = $('.active');
+        var teamRowStats = $('.teamRowStats');
+        for (var i = 0; i < populatePlayerObjects.length; i++) {
+            if (populatePlayerObjects[i].name === currentName) {
                 //When PF button is pressed, adds 1 block to specified name
-                pfCounter++;
-                teamPF++;
-                $('.active').children('.pf').html(pfCounter);
-                $('.teamRowStats').children('.pf').html(teamPF);
-                $('#firstHalfHomeFoul').html("Fouls: " + teamPF);
+                populatePlayerObjects[i].fouls++;
+                Team.fouls++;
+                $('.active').children('.pf').html(populatePlayerObjects[i].fouls);
+                $('.teamRowStats').children('.pf').html(Team.fouls);
+                $('#firstHalfHomeFoul').html("Fouls: " + Team.fouls);
 
                 //Change pf td to red if the player has fouled out.
-                if (pfCounter == 5) {
+                if (populatePlayerObjects[i].fouls == 5) {
                     $('.active').children('.pf').css("background-color", "red");
                 }
-            });
+            }
         }
-    }); //end .name click function
+    });
 
-    //Done Buttons
-    $('#doneButton').on("click", function () {
-        $('#doneYes, #doneNo').toggleClass("hidden");
+    $(document).on("click", '.changeFieldGoalStatDisplay', function () {
+        $('.fg').toggleClass("hidden");
+        $('.fgPercent').toggleClass("hidden");
     });
-    $('#doneNo').on("click", function () {
-        $(this).toggleClass("hidden");
-        $('#doneYes').toggleClass("hidden");
+    $(document).on("click", '.change3PointStatDisplay', function () {
+        $('.3pt').toggleClass("hidden");
+        $('.3ptPercent').toggleClass("hidden");
     });
+    $(document).on("click", '.changeFreeThrowStatDisplay', function () {
+        $('.ft').toggleClass("hidden");
+        $('.ftPercent').toggleClass("hidden");
+    });
+
     //Present the stats in a way that is easily copy/pasted
-    $('#doneYes').on("click", function () {
+    $(document).on("click", '#doneYes', function() {
         $('.rightPanel, .bottomSection, .topSection').addClass("hidden");
         $('.statPanel').css("width", "100%")
             .css("overflow", "inherit");
         $('.action, .benchHeader').addClass("hidden");
 
     });
+
+    // Bootstrap popover for made Field Goals
+    $('a.madeFGButton').popover({
+        container: 'body',
+        html: true,
+        title: 'What type of Field Goal?',
+        placement: 'top',
+        content: '<button class="btn btn-success subMadeFG" id="hiddenFTMade"> FT</button>' +
+        '<button class="btn btn-success subMadeFG" id="hidden3PTMade"> 3PT</button>' +
+        '<button class="btn btn-success subMadeFG" id="hiddenFGMade"> FG</button>'
+    });
+
+    // Bootstrap popover for missed Field Goals
+    $('a.missedFGButton').popover({
+        container: 'body',
+        html: true,
+        title: 'What type of Field Goal?',
+        placement: 'top',
+        content: '<button class="btn btn-danger subMissedFG" id="hiddenFTMissed"> FT</button>' +
+        '<button class="btn btn-danger subMissedFG" id="hidden3PTMissed"> 3PT</button>' +
+        '<button class="btn btn-danger subMissedFG" id="hiddenFGMissed"> FG</button>'
+    });
+
+    // Bootstrap popover for rebounds
+    $('a#rbdButton').popover({
+        container: 'body',
+        html: true,
+        title: 'Offensive or Defensive?',
+        placement: 'top',
+        content: '<button class="btn btn-default statButton subrbd" id="orbd"> Offensive</button>' +
+        '<button class="btn btn-default statButton subrbd" id="drbd"> Defensive</button>'
+    });
+
+    // Bootstrap popover for done button
+    $('a#doneButton').popover({
+        container: 'body',
+        html: true,
+        title: 'Are you sure?',
+        placement: 'top',
+        content: '<button class="btn btn-success btn-sm btn-group-row btn-block" id="doneYes"> YES </button>' +
+        '<button class="btn btn-danger btn-sm btn-group-row btn-block" id="doneNo"> NO </button>'
+    });
+
+
+
 }); //end document ready
