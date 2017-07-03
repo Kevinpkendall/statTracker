@@ -16,12 +16,12 @@ ul {
 #fullSize {
     height: 100%;
     width: 100%;
-    overflow:hidden;        /* hidden, auto. */
+    overflow:auto;        /* hidden, auto. */
 }
 
 .teamOverviewBanner {
     background-color: slategray;
-    text-align: center;
+    /*text-align: center;*/
 }
 #poss {
     margin: 0px;
@@ -31,6 +31,7 @@ ul {
 #homeArrow,
 #awayArrow{
     color: white;
+    padding-left: 80px;
 }
 
 .teamNameInput {
@@ -38,8 +39,14 @@ ul {
 }
 #homeTeamScore,
 #awayTeamScore,
-.teamName{
+.teamName,
+.mobileDropdown{
     color: white;
+}
+#homeTeamScore,
+#awayTeamScore {
+    font-size: 36px;
+    margin-top: 15px;
 }
 
 .teamRandomStats p {
@@ -128,9 +135,7 @@ ul {
     height: inherit;
 }
 
-#confirmAllEditButton,
-#optionsButton,
-#doneButton {
+.bottomSectionButton{
     margin-top: 30%;
 }
 
@@ -186,4 +191,28 @@ ul {
 
 .teamRandomStats p {
     font-size: 15px;
+}
+
+.playerDropdown {
+    text-align: left;
+    display:inline-block;
+    padding-right: 10px;
+}
+.statDropdown {
+    text-align: right;
+    display:inline-block;
+    padding-left: 10px;
+}
+
+.teamOverviewBanner>ul>li>a {
+    color: black;
+}
+
+.mobileConfirmAll {
+    padding-bottom: 10px;
+}
+.changeFieldGoalStatDisplay,
+.change3PointStatDisplay,
+.changeFreeThrowStatDisplay {
+    cursor: pointer;
 }
